@@ -13,25 +13,25 @@ int main(){
 
 	if (a != 0 && b != 0){
 		J = pow(10, -2)*a*b+(2*a/(b*g))+(3*b*g/a);
-		printf("J = %f\n", J);
+		printf("J = %f", J);
 		if (d1 != 0)
 		{
 			K = (pow(10, -2)/(a+b))*(2/a+a/b-g/(b*d2));
-			printf("K = %f\n", K);
+			printf("K = %f", K);
 		}
 		else
-			printf("Выражение K не имеет смысла\n");
+			printf("Выражение K не имеет смысла");
 	}
 	else
-		printf("Выражения J и K не имеют смысла\n");
+		printf("Выражения J и K не имеют смысла");
 	
 	if (d1 != -1 && d2 != -1)
 	{
 		L = a*b*g/(1+d1) + a*b*g/(1+d2) + 0.2;
-		printf("L = %f\n", L);
+		printf("L = %f", L);
 	}
 	else
-		printf("Выражение L не имеет смысла\n");
+		printf("Выражение L не имеет смысла");
 	
 	system("pause");
 	system("cls");
