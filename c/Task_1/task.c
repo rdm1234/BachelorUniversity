@@ -1,3 +1,5 @@
+/* Вариант 15 */
+
 #include <stdio.h>
 #include <math.h>
 
