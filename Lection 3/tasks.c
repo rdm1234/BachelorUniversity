@@ -25,6 +25,7 @@ void task3_6(){
 			i++;
 		a/=10;
 	}
+	
 	printf("Семь встречается %d раз\n", i);
 	wnc();
 }
@@ -35,33 +36,34 @@ void task3_7(){
 	printf("Введите число в 10 системе счисления\n");
 	scanf("%d", &a);
 	b = a;
-    while (a>0){
-        c++;
-        a/=2;
-    }
-    int d[c];
-    a=c;
-    c--;
-    while (c>-1){
-        if(b%2!=0){
-            d[c]=1;
-            b--;
-        }
-        else
-            d[c]=0;
+	// Считыается количество цифр двоичного кода для объявления массива
+  while (a>0){
+		c++;
+		a/=2;
+  }
+  int d[c];
+  a=c;
+	
+  c--;
+  while (c>-1){
+		if(b%2!=0){
+			d[c]=1;
+		  b--;
+		}
+    else
+			d[c]=0;
 
-        b=b/2;
-        c--;
-    }
-    c=0;
-    printf("Число в 2 СС = ");
-    while (c<a){
-        printf("%d", d[c]);
-        c++;
-    }
-
-    wnc();
-
+    b=b/2;
+		c--;
+  }
+	
+  c=0;
+	printf("Число в 2 СС = ");
+  while (c<a){
+  	printf("%d", d[c]);
+  	c++;
+  }
+	wnc();
 }
 
 // Задание 3.9
@@ -109,15 +111,25 @@ void task3_11(){
 
 
 int main(){
-    	setlocale(LC_ALL, "Rus");
+  setlocale(LC_ALL, "Rus");
 	int n;
+	
+	printf("Задание 3.6\n");
 	task3_6();
-    	task3_7();
+	
+	printf("Задание 3.7\n");
+  task3_7();
+	
+	printf("Задание 3.9\n");
 	task3_9();
+	
+	printf("Задание 3.10\n");
 	printf("Введите число для вычисления фактариала\n");
 	scanf("%d", &n);
 	printf("Факториал числа n = %ld\n", fac(n));
 	wnc();
+	
+	printf("Задание 3.11\n");
 	task3_11();
 
 	return 0;
