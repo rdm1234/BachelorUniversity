@@ -17,6 +17,7 @@ int main()
             y=-2;
         }
     }
+    return 0;
 }
 float f(float x, float y){
     float f=(x*x+y*y)/(x*x*x-y*y*y);
