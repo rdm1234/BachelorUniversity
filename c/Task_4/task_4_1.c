@@ -1,4 +1,4 @@
-// Рождественский, Вариант 15
+// Рождественский, Вариант 15, задание 1
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
