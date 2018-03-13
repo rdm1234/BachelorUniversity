@@ -8,11 +8,11 @@ double funct(double[],double[]);
 
 int main()
 {
-
+    srand(time(NULL));
     int i;
     double mass1[SIZE], mass2[SIZE];
 
-    printf("Ěŕńńčâű 1, 2\n");
+    printf("Массивы 1, 2\n");
     for(i=0;i<SIZE;i++){
         mass1[i]=rand()%1000;
         mass2[i]=rand()%1000;
@@ -33,8 +33,8 @@ double funct(double mass1[], double mass2[])
         mass3[i]=mass2[i]*mass1[i];
         sum+=sqrt(mass3[i]);
     }
-    printf("Ńóěěŕ = %f\n", sum);
-    printf("3 Ěŕńńčâ\n");
+    printf("Сумма = %f\n", sum);
+    printf("3 Массив\n")
     for(i=0; i<SIZE; i++)
         printf("%f\n", mass3[i]);
     return sum;
