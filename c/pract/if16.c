@@ -1,4 +1,4 @@
-// if16
+// Рождественский if16
 #include "stdio.h"
 
 int main(){
