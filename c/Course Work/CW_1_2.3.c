@@ -4,7 +4,7 @@
 #include <time.h> // Подключение библиотеки time.h
 
 double method_1(int, double, double, double, double, double); // Прототип функции вычисляющей корни по заданному методу
-double method_2(int, double, double, double, double);
+double method_2(int, double, double, double, double); // Прототип функции вычисляющей корни по заданному методу
 double f(int, double, double, double); // Прототип функции, возвращающей резульаты уравнения
 double df(int, double, double, double);
 void inputAndFails(int *, int *, double *, double *, double *, double *, double *, double *); 
@@ -54,7 +54,7 @@ double method_2(int eqNum, double k1, double k2, double E, double xn){
   
   do{
     x = xn - f(eqNum, k1, k2, xn)/df(eqNum, k1, k2, xn);
-    
+
     rx[0]=fabs(x-xn);
     rx[1]=fabs(f(eqNum, k1, k2, xn-E));
     rx[2]=fabs(f(eqNum, k1, k2, xn+E));
@@ -64,6 +64,7 @@ double method_2(int eqNum, double k1, double k2, double E, double xn){
       return -1;
     xn=x;
     iter++;
+    
   }while(rx[0]>E);
   printf("iter = %d\n", iter);
   return x;
@@ -72,15 +73,16 @@ double method_2(int eqNum, double k1, double k2, double E, double xn){
 double df(int eqNum, double k1, double k2, double x){
   switch(eqNum){
   case 1:
-    return 1/(x*log(2));
+    printf("pr = %f\n", 1/(x*logf(2)));
+    return 1/(x*logf(2));
   case 2:
     return 4*powf(x,3)+k1*3*x*x-k2;
-  case 3:
+  case 3:  
     return 5*powf(x,4)+2*k1*x;
   case 4:
     return 2*x+k1;
   case 5:
-    return 2/(x*log(2));
+    return 2/(x*logf(2));
   case 6:
     return 3*x*x+k1;
   default:
@@ -92,6 +94,7 @@ double f(int eqNum, double k1, double k2, double x){
   
   switch(eqNum){ // Оператор switch обрабатывает 
   case 1:
+    printf("f = %f\n", log2f(k1*x) - k2);
     return log2f(k1*x) - k2;
   case 2:
     return powf(x,4) + k1*powf(x,3) - k2*x;
@@ -110,7 +113,7 @@ double f(int eqNum, double k1, double k2, double x){
 }
 
 void inputAndFails(int *fM, int *eN, double *k1, double *k2, double *E, double *a, double *b, double *xn){
-  double cache;
+  double cache,fa,fb;
   // Выбор метода
   printf("Введите номер способа, которым хотите решить это уравнение (1, 2)\n");
   scanf("%d", fM);
@@ -175,13 +178,15 @@ void inputAndFails(int *fM, int *eN, double *k1, double *k2, double *E, double *
 	printf("Они не могут быть равны\b");
 	continue;
       }
-	
-    if((f(*eN, *k1, *k2, *a) > 0 && f(*eN, *k1, *k2, *b) > 0) || (f(*eN, *k1, *k2, *a) < 0 && f(*eN, *k1, *k2, *b) < 0)){
-      printf("Неподходящие а, b, либо уравнение не имеет решений\n");
-      continue;
-    }
 
-    break;
+      fa=f(*eN, *k1, *k2, *a);
+      fb=f(*eN, *k1, *k2, *b);
+      if((fa > 0 && fb > 0) || (fa < 0 && fb < 0)){
+	printf("Неподходящие а, b, либо уравнение не имеет решений\n");
+	continue;
+      }
+
+      break;
   }
  }
 
