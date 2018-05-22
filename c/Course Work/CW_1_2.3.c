@@ -146,6 +146,7 @@ void inputAndFails(int *fM, int *eN, double *k1, double *k2, double *E, double *
   // Ввод E
   printf("Введите точность решения уравнение E\n E = ");
   scanf("%lf", E);
+  *E = fabs(*E);
 
   // Ввод a, b
   if(*fM == 2){ 
