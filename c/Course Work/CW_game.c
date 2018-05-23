@@ -86,6 +86,7 @@ int main(){
 	points+=994;
       }
       printf("Верно!\n");
+      level=0;
     }
 
     else{
@@ -194,8 +195,9 @@ float generate(int elementsAmount, int from, int to){
       continue;
     }
     // Если следующее действие деление, то это помогает избежать случаев деления на 0
-    if(signArr[i] == 4 && element[0] == 0 && i>-1)
+    if(signArr[i] == 4 && element[0] == 0)
       element[0]++;
+    
     // Закрывающая скобка для правильного математического порядка действий
     if(signArr[i] > 2 && signArr[i-1] < 3)
       printf(")");     
