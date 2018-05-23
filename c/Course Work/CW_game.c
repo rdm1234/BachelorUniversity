@@ -107,6 +107,10 @@ int main(){
   return 0;
 }
 
+/* Выбор уровня сложности - от 0 до 5.
+   В зависимости от выбранного уровня будут заданы from, to и elementsAmount.
+   Функция вернёт выбранный уровень сложности для подсчёта получаемых игроком очков.
+ */ 
 int generate_level(int *fP, int *tP, int *elAmP){
   int level;
   printf("Выберите уровень сложности\n 0 - very easy\n 1 - easy\n 2 - medium\n 3 - hard\n 4 - impossible\n 5 - you can't do this\n");
@@ -152,6 +156,7 @@ int generate_level(int *fP, int *tP, int *elAmP){
   return level;
 }
 
+// Генерация выражения c заданными параметрами:  количество чисел в выражении; отрезок на числовой оси, в пределах которого будут генерируемые числа. 
 float generate(int elementsAmount, int from, int to){
   float result=0, element[2];
   int i, *signArr, r;
@@ -171,16 +176,19 @@ float generate(int elementsAmount, int from, int to){
   */
   for(i = 0; i < elementsAmount-1; i++)
     signArr[i] = rand()%5+1;
-
+  // Вывод скобок в начале выражения, чтобы действия шли в правильном математическом порядке
   for(i = 1; i < elementsAmount; i++){
     if(signArr[i] > 2 && signArr[i-1] < 3)
       printf("(");
   }
-  
+  // Вывод всех элементов выражения
   for(i = -1; i < elementsAmount; i++){
+    // Генерируется элемент от from до to, для этого используется формула:
     element[0]=rand()%r - abs(from);
+    // Если следующее действие деление, то это помогает избежать случаев деления на 0
     if(signArr[i] == 4 && element[0] == 0)
       element[0]++;
+    // Вывод первого элемента выражения
     if(i==-1){
       result=element[0];
       if(signArr[0]>2)
@@ -188,6 +196,7 @@ float generate(int elementsAmount, int from, int to){
       show_element(result);
       continue;
     }
+    // Закрывающая скобка для правильного математического порядка действий
     if(signArr[i] > 2 && signArr[i-1] < 3)
       printf(")");     
     switch(signArr[i]){
@@ -224,12 +233,15 @@ float generate(int elementsAmount, int from, int to){
     case -1:
       printf(" = ? \n");
     }
+    // Обрабатывается последняя итерация
     if(signArr[i]==-1)
       break;
     show_element(element[0]);
-    
+    // Это используется для расставления скобок
     element[1]=element[0];
   }
+  // освобождается память и возвращается результат
+  free(signArr);
   return result;
 }
 void show_element(float element){
