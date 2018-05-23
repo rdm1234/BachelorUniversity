@@ -185,9 +185,6 @@ float generate(int elementsAmount, int from, int to){
   for(i = -1; i < elementsAmount; i++){
     // Генерируется элемент от from до to, для этого используется формула:
     element[0]=rand()%r - abs(from);
-    // Если следующее действие деление, то это помогает избежать случаев деления на 0
-    if(signArr[i] == 4 && element[0] == 0)
-      element[0]++;
     // Вывод первого элемента выражения
     if(i==-1){
       result=element[0];
@@ -196,6 +193,9 @@ float generate(int elementsAmount, int from, int to){
       show_element(result);
       continue;
     }
+    // Если следующее действие деление, то это помогает избежать случаев деления на 0
+    if(signArr[i] == 4 && element[0] == 0 && i>-1)
+      element[0]++;
     // Закрывающая скобка для правильного математического порядка действий
     if(signArr[i] > 2 && signArr[i-1] < 3)
       printf(")");     
