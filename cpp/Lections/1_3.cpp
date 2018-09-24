@@ -70,6 +70,13 @@ int main() {
 	multiply(matrix_1, n_1, m_1, matrix_2, n_2, m_2);
 	cout << endl << "Матрица 2 * Матрица 3" << endl;
 	multiply(matrix_2, n_2, m_2, matrix_3, n_3, m_3);
+	
+	for (int i = 0; i < n_1; i++) delete[]matrix_1[i];
+	delete[]matrix_1;
+	for (int i = 0; i < n_2; i++) delete[]matrix_2[i];
+	delete[]matrix_2;
+	for (int i = 0; i < n_3; i++) delete[]matrix_3[i];
+	delete[]matrix_3;
 
 	system("pause");
 	return 0;
