@@ -53,7 +53,7 @@ int main() {
 		delete[]arr_str;
 		break;
 	case 2:
-		cout << "Введите количество цифр:" << endl;
+		cout << "Введите количество чисел:" << endl;
 		cin >> n;
 		arr_int = new int[n];
 		cout << "Введите все цифры" << endl;
