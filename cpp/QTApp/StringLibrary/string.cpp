@@ -15,11 +15,6 @@ String::String(const char *str) : String()
         this->str[i] = str[i];
 }
 
-//String::String(const int size) : String()
-//{
-//    change_size(size);
-//}
-
 String::String(const String &other) : String()
 {
     this->change_size(other.size);
