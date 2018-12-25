@@ -2,10 +2,6 @@
 #ifndef PAIR_H
 #define PAIR_H
 
-
-//typedef Vector<Pair<int[2], bool>> vecPairI2B;
-
-
 template <typename T1, typename T2>
 class Pair
 {
