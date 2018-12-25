@@ -15,6 +15,5 @@ namespace mystr {
     int star(const char * str, int str_index, const char * find, int find_index);
 
     int repeat(const char * str, int str_index, const char * find, int find_index);
-    int repeat1(const char * str, int str_index, const char * find, int find_index);
 }
 #endif // REGULARFUNCTIONS_H
