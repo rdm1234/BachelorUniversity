@@ -61,18 +61,35 @@ drop user if exists 'director';
 drop user if exists 'worker';
 drop user if exists 'visitor';
 
+# 3
 create user 'administrator' identified by 'adm_pass';
 create user 'director' identified by 'dir_pass';
 create user 'worker' identified by 'wor_pass';
-create user 'visitor' identified by 'vis_pass';
+create user 'visitor';
 
+# 4
 grant all privileges on var_14_2.* to 'administrator';
 revoke grant option on var_14_2.* from 'administrator';
 
+# 5
 grant all privileges on var_14_2.* to 'director';
 revoke create, update, drop on var_14_2.* from 'director';
 
-grant insert, delete, update, select on var_14_2.Продукты to 'visitor';
-grant insert, delete, update, select on var_14_2.Накладные to 'visitor';
+# 6
+grant insert, delete, update, select on var_14_2.Продукты to 'worker';
+grant insert, delete, update, select on var_14_2.Накладные to 'worker';
+#revoke delete, update on var_14_2.Накладные from 'worker';
+grant insert, select, update(Количество, Цена_за_ед) on Список_продуктов;
+
+flush privileges;
+
+# 7
+create view temp as select A.Номер_накладной, Дата_оформления, C.Номенклатурный_номер, Наименование_продукта, Единицы_измерения, Цена_за_ед
+from Накладные as A
+inner join Список_продуктов as B on A.Номер_накладной = B.Номер_накладной
+inner join Продукты as C on B.Номенклатурный_номер = C.Номенклатурный_номер;
+
+# 8
+grant all privileges on var_14_2.temp to 'visitor';
 
 flush privileges;
