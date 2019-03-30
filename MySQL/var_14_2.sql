@@ -76,10 +76,10 @@ grant all privileges on var_14_2.* to 'director';
 revoke create, update, drop on var_14_2.* from 'director';
 
 # 6
-grant insert, delete, update, select on var_14_2.Продукты to 'worker';
-grant insert, delete, update, select on var_14_2.Накладные to 'worker';
-#revoke delete, update on var_14_2.Накладные from 'worker';
-grant insert, select, update(Количество, Цена_за_ед) on Список_продуктов;
+grant insert, delete, update, select on Продукты to 'worker';
+grant insert, delete, update(), select on Накладные to 'worker';
+#revoke delete, update(Номер_накладной) on var_14_2.Накладные from 'worker';
+grant insert, select, update(Количество, Цена_за_ед) on Список_продуктов to 'worker';
 
 flush privileges;
 
