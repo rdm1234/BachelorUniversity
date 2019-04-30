@@ -77,7 +77,7 @@ revoke create, update, drop on var_14_2.* from 'director';
 
 # 6
 grant insert, delete, update, select on Продукты to 'worker';
-grant insert, delete, update(), select on Накладные to 'worker';
+grant insert, delete, update(Количество, Цена_за_ед, Номенклатурный_номер), select on Накладные to 'worker';
 #revoke delete, update(Номер_накладной) on var_14_2.Накладные from 'worker';
 grant insert, select, update(Количество, Цена_за_ед) on Список_продуктов to 'worker';
 
