@@ -56,30 +56,32 @@ values
 (1002, 100, 120, 28),
 (1002, 103, 100, 200);
 
-drop user if exists 'administrator';
+drop user if exists 'administrator1';
 drop user if exists 'director';
 drop user if exists 'worker';
 drop user if exists 'visitor';
 
 # 3
-create user 'administrator' identified by 'adm_pass';
+create user 'administrator1' identified by 'adm_pass';
 create user 'director' identified by 'dir_pass';
 create user 'worker' identified by 'wor_pass';
 create user 'visitor';
 
 # 4
-grant all privileges on var_14_2.* to 'administrator';
-revoke grant option on var_14_2.* from 'administrator';
+grant all privileges on var_14_2.* to 'administrator1';
+revoke grant option on var_14_2.* from 'administrator1';
 
 # 5
 grant all privileges on var_14_2.* to 'director';
 revoke create, update, drop on var_14_2.* from 'director';
 
 # 6
-grant insert, delete, update, select on Продукты to 'worker';
-grant insert, delete, update(Количество, Цена_за_ед, Номенклатурный_номер), select on Накладные to 'worker';
-#revoke delete, update(Номер_накладной) on var_14_2.Накладные from 'worker';
-grant insert, select, update(Количество, Цена_за_ед) on Список_продуктов to 'worker';
+grant insert, delete, update, select 
+	on Продукты to 'worker';
+grant insert, update(Кому_Должность, Кому_ФИО, От_Должность, От_ФИО), select 
+	on Накладные to 'worker';
+grant insert, select, update(Количество, Цена_за_ед) 
+	on Список_продуктов to 'worker';
 
 flush privileges;
 
@@ -90,6 +92,6 @@ inner join Список_продуктов as B on A.Номер_накладно
 inner join Продукты as C on B.Номенклатурный_номер = C.Номенклатурный_номер;
 
 # 8
-grant all privileges on var_14_2.temp to 'visitor';
+grant select on var_14_2.temp to 'visitor';
 
 flush privileges;
