@@ -1,0 +1,78 @@
+﻿<Page x:Class="CourseWork.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CourseWork"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="Статистическое моделирование СМО">
+
+    <Grid Margin="10,10,10,10" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource headerTextStyle}" >
+                Введите:
+            </Label>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource inTextBlockSyle}">J =</TextBlock>
+            <TextBox Name="J_TextBox"  Grid.Column="1" Grid.Row="1" Style="{StaticResource inTextBoxStyle}">3</TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource inTextBlockSyle}">T =</TextBlock>
+            <TextBox Name="T_TextBox" Grid.Column="1" Grid.Row="2" Style="{StaticResource inTextBoxStyle}">60</TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="3" Style="{StaticResource inTextBlockSyle}">l1 =</TextBlock>
+            <TextBox Name="l1_TextBox" Grid.Column="1" Grid.Row="3" Style="{StaticResource inTextBoxStyle}">0,8</TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource inTextBlockSyle}">l2 =</TextBlock>
+            <TextBox Name="l2_TextBox" Grid.Column="1" Grid.Row="4" Style="{StaticResource inTextBoxStyle}">1,5</TextBox>
+
+            <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Style="{StaticResource buttonStyle}" Click="SolveButtonClick">Решить</Button>
+            <TextBlock Name ="k1_textBlock" Grid.Column="2" Grid.Row="3" Style="{StaticResource kTextBlockSyle}"></TextBlock>
+            <TextBlock Name ="k2_textBlock" Grid.Column="2" Grid.Row="4" Style="{StaticResource kTextBlockSyle}"></TextBlock>
+
+            <ListBox Name="legendListBox" Grid.Row="6" Margin="3" Grid.ColumnSpan="4" Height="Auto"/>
+            <!--<Border BorderBrush="Black"  BorderThickness="0.7" Grid.Row="6" Margin="0" Padding="3" Grid.ColumnSpan="4" Height="Auto"><ScrollViewer>
+                <TextBlock Name="legendTextBlock"/>
+                </ScrollViewer>
+            </Border>-->
+        </Grid>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <DataGrid Grid.Column="2" Grid.Row="0" Name="dataGrid_1" Style="{StaticResource dataGridStyle}"/>
+
+            <DataGrid Grid.Column="2" Grid.Row="1" Name="dataGrid_2" Style="{StaticResource dataGridStyle}"/>
+
+            <DataGrid Grid.Column="2" Grid.Row="2" Name="dataGrid_3" Style="{StaticResource dataGridStyle}"/>
+
+        </Grid>
+        
+    </Grid>
+</Page>
