@@ -67,8 +67,6 @@
             <DataGrid Grid.Column="2" Grid.Row="1" Name="dataGrid_2" Style="{StaticResource dataGridStyle}"/>
 
             <DataGrid Grid.Column="2" Grid.Row="2" Name="dataGrid_3" Style="{StaticResource dataGridStyle}"/>
-
         </Grid>
-        
     </Grid>
 </Page>

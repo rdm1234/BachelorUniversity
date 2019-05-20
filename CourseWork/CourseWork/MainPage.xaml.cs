@@ -12,8 +12,13 @@ namespace CourseWork
 {
     public partial class MainPage : Page
     {
+        // Таблицы с данными
+        static DataTable main_table = new DataTable("main_table");
+        static DataTable result_table = new DataTable("result_Table");
+
         // формат хранения чисел double (точность вычисленй)
         string doubleFormat = "0.####";
+
         // Генерация данных для таблиц
         private void GenerateTableData(int J, int T_max, double l1, double l2)
         {
@@ -36,26 +41,25 @@ namespace CourseWork
             // переменные, с помощью которых получаются случайные числа
             Random R = new Random();
             Random r = new Random();
-            DataRow row = main_table.NewRow();
+
             /* t - время между 2 последовательными заявками
              * T - момент поступления заявки
              * cur_r - случайное число r
              * cur_R - случайное число R
-             * ln_r
-             * ln_R
-             * tau
-             * startSvc
-             * endSvc
-             * lastEndSvc
-             * tau_sum
-             * P
-             * tau_mid_sum
-             * N_rec_sum
-             * N_svc_sum
-             * P_sum
-             * tau_mid
+             * ln_r = -Math.Log(cur_r)
+             * ln_R = -Math.Log(cur_R)
+             * tau - время обслуживания заявки
+             * startSvc - момент начала обслуживания
+             * endSvc - момент окончания обслуживания
+             * tau_sum - суммарное время обслуживание за испытание
+             * P - вероятность отказа
+             * tau_mid - средняя длительность обслуживания
+             * tau_mid_sum - сумма tau_mid
+             * N_rec_sum - всего получено заявок
+             * N_svc_sum - всего обслужено заявок
+             * P_sum - сумма P
              */
-            double t, T, cur_r, cur_R, ln_r, ln_R, tau, startSvc, endSvc, lastEndSvc, tau_sum, P, tau_mid_sum, N_rec_sum, N_svc_sum, P_sum, tau_mid;
+            double t, T, cur_r, cur_R, ln_r, ln_R, tau, startSvc, endSvc, tau_sum, P, tau_mid_sum, N_rec_sum, N_svc_sum, P_sum, tau_mid;
 
             int svcCount, refCount, i;
 
@@ -68,7 +72,7 @@ namespace CourseWork
                 cur_R = R.Next(1, 100)/100.0;
                 ln_R = -Math.Log(cur_R);
                 tau_sum = cur_r = ln_r = startSvc = T = t = 0;
-                endSvc = tau = lastEndSvc = k2 * ln_R;
+                endSvc = tau = k2 * ln_R;
                 svcCount = 1;
                 refCount = 0;
 
@@ -183,10 +187,6 @@ namespace CourseWork
 
             RefreshTables();         
         }
-
-        // Таблицы с данными
-        static DataTable main_table = new DataTable("main_table");
-        static DataTable result_table = new DataTable("result_Table");
 
         // Выполняется при нажатии на кнопку "Решить"
         private void SolveButtonClick(object sender, RoutedEventArgs e)
