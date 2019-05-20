@@ -53,10 +53,6 @@
             <TextBlock Name ="k2_textBlock" Grid.Column="2" Grid.Row="4" Style="{StaticResource kTextBlockSyle}"></TextBlock>
 
             <ListBox Name="legendListBox" Grid.Row="6" Margin="3" Grid.ColumnSpan="4" Height="Auto"/>
-            <!--<Border BorderBrush="Black"  BorderThickness="0.7" Grid.Row="6" Margin="0" Padding="3" Grid.ColumnSpan="4" Height="Auto"><ScrollViewer>
-                <TextBlock Name="legendTextBlock"/>
-                </ScrollViewer>
-            </Border>-->
         </Grid>
 
         <Grid Grid.Column="2">

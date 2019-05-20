@@ -168,22 +168,18 @@ namespace CourseWork
             GenerateTableData(int.Parse(J_TextBox.Text), int.Parse(T_TextBox.Text), float.Parse(l1_TextBox.Text), float.Parse(l2_TextBox.Text));
 
             // Создание легенды
-            //StringBuilder c = new StringBuilder();
             List<string> colNames = new List<string>(main_table.Columns.Count);
             foreach (DataColumn col in main_table.Columns)
             {
                 if (col.Caption != col.ColumnName)
                 colNames.Add(col.Caption);
-                //c.Append(String.Format("{0}\n", col.Caption));
             }
             foreach (DataColumn col in result_table.Columns)
             {
                 colNames.Add(col.Caption);
-                //c.Append(String.Format("{0}\n", col.Caption));
             }
             // Вывод легенды
             legendListBox.ItemsSource = colNames;
-            //legendTextBlock.Text = c.ToString();
 
             RefreshTables();         
         }
@@ -205,6 +201,5 @@ namespace CourseWork
                 MessageBox.Show(fE.Message, "Ошибка!");
             }
         }
-        
     }
 }
