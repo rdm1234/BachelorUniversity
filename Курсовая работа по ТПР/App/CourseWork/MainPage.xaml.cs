@@ -63,6 +63,7 @@ namespace CourseWork
 
             // Генерация и вывод данных таблиц
             SolveButtonClick(null, null);
+            // Задание ширины столбцов
             dataGrid_1.ColumnWidth = 50;
             dataGrid_2.ColumnWidth = 50;
             dataGrid_3.ColumnWidth = 50;
@@ -72,10 +73,10 @@ namespace CourseWork
         private void GenerateTableData(int J, int T_max, double l1, double l2)
         {
             // Проверки на корреткность аргументов
-            if (J < 0) throw new ArgumentOutOfRangeException("J", "Значение данного аргумента не может быть меньше 0");
-            if (T_max < 0) throw new ArgumentOutOfRangeException("T_max", "Значение данного аргумента не может быть меньше 0");
-            if (l1 < 0) throw new ArgumentOutOfRangeException("l1", "Значение данного аргумента не может быть меньше 0");
-            if (l2 < 0) throw new ArgumentOutOfRangeException("l2", "Значение данного аргумента не может быть меньше 0");
+            if (J <= 0) throw new ArgumentOutOfRangeException("J", "Значение данного аргумента не может быть меньше 0");
+            if (T_max <= 0) throw new ArgumentOutOfRangeException("T_max", "Значение данного аргумента не может быть меньше 0");
+            if (l1 <= 0) throw new ArgumentOutOfRangeException("l1", "Значение данного аргумента не может быть меньше 0");
+            if (l2 <= 0) throw new ArgumentOutOfRangeException("l2", "Значение данного аргумента не может быть меньше 0");
 
             // очистка значений таблиц
             main_table.Clear();
@@ -86,17 +87,17 @@ namespace CourseWork
             double k2 = 1.0 / l2;
             k1_textBlock.Text = string.Format("k1 = {0}", k1.ToString(doubleFormat));
             k2_textBlock.Text = string.Format("k2 = {0}", k2.ToString(doubleFormat));
-
-            // переменные, с помощью которых получаются случайные числа
+ 
+            // объекты класса Random, с помощью которых получаются случайные числа
             Random R = new Random();
             Random r = new Random();
-
-            // временные переменные (обозначения см. в приложении 1)
-            double t, T, cur_r, cur_R, ln_r, ln_R, tau, startSvc, endSvc, tau_sum, P, tau_mid_sum, N_rec_sum, N_svc_sum, P_sum, tau_mid;
+            
+            // переменные (обозначения см. в приложении 1)
+            double t, T, cur_r, cur_R, ln_r, ln_R, tau, startSvc, endSvc, tau_sum, P, tau_mid_sum, N_rec_sum, N_svc_sum, P_sum, tau_mid, P_mid;
             int svcCount, refCount, i;
 
             // переменные, использующиеся в результирующей таблице
-            tau_mid_sum = N_rec_sum = N_svc_sum = P_sum = tau_mid = 0;
+            tau_mid_sum = N_rec_sum = N_svc_sum = P_sum = tau_mid = P_mid = 0;
             
             // Все испытания
             for (int j = 1; j <= J; j++)
@@ -156,51 +157,63 @@ namespace CourseWork
             }
             // последние две строки в табл. 3
             result_table.Rows.Add(new object[] { "sum", N_rec_sum, N_svc_sum, null, tau_mid_sum.ToString(doubleFormat), P_sum.ToString(doubleFormat), null });
-            result_table.Rows.Add(new object[] { "mid", (N_rec_sum/J).ToString(doubleFormat), (N_svc_sum/J).ToString(doubleFormat), null, (tau_mid_sum/J).ToString(doubleFormat), (P_sum/J).ToString(doubleFormat), null });
+            P_mid = P_sum / J;
+            result_table.Rows.Add(new object[] { "mid", (N_rec_sum/J).ToString(doubleFormat), (N_svc_sum/J).ToString(doubleFormat), null, (tau_mid_sum/J).ToString(doubleFormat), P_mid.ToString(doubleFormat), (1.0 - P_mid).ToString(doubleFormat) });
         }
 
         // Обновляет значения DataGrid (вывод таблиц)
         private void RefreshTables()
         {
+            // выборка данных с помощью LINQ запроса
             dataGrid_1.ItemsSource = 
                 (from row 
                  in main_table.AsDataView().ToTable("Table1", false, "j", "i", "r", "-ln(r)", "t", "T").AsEnumerable()
                  where row["i"].ToString()!="sum"
                  select row).AsDataView();
 
+            // выборка отдельных столбцов из главной таблицы
             dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false, "j", "i", "R", "-ln(R)", "tau", "startSvc", "endSvc", "svc", "ref").DefaultView;
 
+            // таблица результатов выводится полностью
             dataGrid_3.ItemsSource = result_table.DefaultView;
 
+            // если выбран пункт "Полное название", заменяет заголовки столбов
             NameOrCaption_SelectionChanged(NameOrCaption, null);
         }
 
         // Выполняется при нажатии на кнопку "Решить"
         private void SolveButtonClick(object sender, RoutedEventArgs e)
         {
+            // Что должно произойти
             try
             {
                 GenerateTableData(int.Parse(J_TextBox.Text), int.Parse(T_TextBox.Text), double.Parse(l1_TextBox.Text), double.Parse(l2_TextBox.Text));
                 RefreshTables();
             }
-            catch (System.FormatException e1)
+            // Если данные введены в неверном формате (к примеру "10.4", а не "10,4")
+            catch (FormatException e1)
             {
                 MessageBox.Show(e1.Message, "Ошибка!");
             }
+            // Если аргумент меньше нуля
             catch (ArgumentOutOfRangeException e2)
             {
                 MessageBox.Show(e2.Message, "Ошибка!");
             }
+            // Любое другое исключение
             catch (Exception e3) { }
         }
 
+        // Вызывается при выборе другого значения чекбокса NameOrCaption
         private void NameOrCaption_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(((ComboBoxItem)((ComboBox)sender).SelectedItem).Name.ToString() == "caption")
             {
+                // Меняет ширину и заголовки столбцов
                 ChangeDataGridHeaders(main_table, dataGrid_1, 100);
                 ChangeDataGridHeaders(main_table, dataGrid_2, 100);
                 ChangeDataGridHeaders(result_table, dataGrid_3, 100);
+                // Делает легенду невидимой
                 if (legendListBox != null)
                 {
                     legendListBox.Visibility = Visibility.Hidden;
@@ -210,9 +223,11 @@ namespace CourseWork
             }
             else
             {
+                // Меняет ширину и заголовки столбцов
                 ChangeDataGridHeaders(main_table, dataGrid_1, 50, true);
                 ChangeDataGridHeaders(main_table, dataGrid_2, 50, true);
                 ChangeDataGridHeaders(result_table, dataGrid_3, 50, true);
+                // Делает легенду видимой
                 if (legendListBox != null)
                 {
                     legendListBox.Visibility = Visibility.Visible;
@@ -222,9 +237,12 @@ namespace CourseWork
             }
         }
 
+        // Меняет заголовки в таблице (и ширину столбцов)
         private void ChangeDataGridHeaders(DataTable dt, DataGrid dg, int width, bool toName = false)
         {
+            // Проверка, что выводимая таблица и таблица с данными существуют
             if(dt!=null && dg!=null)
+            {
                 if(!toName)
                 {
                     foreach (DataGridColumn dgcol in dg.Columns)
@@ -248,6 +266,7 @@ namespace CourseWork
                         dgcol.Width = width;
                     }
                 }
+            }
         }
     }
 }
