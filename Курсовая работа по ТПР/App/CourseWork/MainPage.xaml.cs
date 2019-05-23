@@ -47,9 +47,6 @@ namespace CourseWork
                 new System.Data.DataColumn("Q",typeof(double)){Caption="Q - вероятность отказа", AllowDBNull = true}
             });
 
-            // Генерация и вывод данных
-            SolveButtonClick(null, null);
-
             // Создание легенды
             List<string> colNames = new List<string>(main_table.Columns.Count);
             foreach (DataColumn col in main_table.Columns)
@@ -63,6 +60,9 @@ namespace CourseWork
             }
             // Вывод легенды
             legendListBox.ItemsSource = colNames;
+
+            // Генерация и вывод данных таблиц
+            SolveButtonClick(null, null);
         }
 
         // Генерация данных для таблиц
@@ -168,6 +168,7 @@ namespace CourseWork
             dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false, "j", "i", "R", "-ln(R)", "tau", "startSvc", "endSvc", "svc", "ref").DefaultView;
 
             dataGrid_3.ItemsSource = result_table.DefaultView;
+
             NameOrCaption_SelectionChanged(NameOrCaption, null);
         }
 
@@ -192,54 +193,58 @@ namespace CourseWork
 
         private void NameOrCaption_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(legendListBox!=null)
-                if(((ComboBoxItem)((ComboBox)sender).SelectedItem).Name.ToString() == "caption")
+            if(((ComboBoxItem)((ComboBox)sender).SelectedItem).Name.ToString() == "caption")
+            {
+                ChangeDataGridHeaders(main_table, dataGrid_1, 100);
+                ChangeDataGridHeaders(main_table, dataGrid_2, 100);
+                ChangeDataGridHeaders(result_table, dataGrid_3, 100);
+                if (legendListBox != null)
                 {
-                    ChangeDataGridHeaders(main_table, dataGrid_1, 100);
-                    ChangeDataGridHeaders(main_table, dataGrid_2, 100);
-                    ChangeDataGridHeaders(result_table, dataGrid_3, 100);
                     legendListBox.Visibility = Visibility.Hidden;
                     legendListBox.Width = 0;
-                    legendListBox.Height = 0;
+                    legendListBox.Height = 0; 
                 }
-                else
+            }
+            else
+            {
+                ChangeDataGridHeaders(main_table, dataGrid_1, 50, true);
+                ChangeDataGridHeaders(main_table, dataGrid_2, 50, true);
+                ChangeDataGridHeaders(result_table, dataGrid_3, 50, true);
+                if (legendListBox != null)
                 {
-                    ChangeDataGridHeaders(main_table, dataGrid_1, 50, true);
-                    ChangeDataGridHeaders(main_table, dataGrid_2, 50, true);
-                    ChangeDataGridHeaders(result_table, dataGrid_3, 50, true);
-
                     legendListBox.Visibility = Visibility.Visible;
                     legendListBox.Height = 364;
                     legendListBox.Width = 312;
                 }
+            }
         }
 
         private void ChangeDataGridHeaders(DataTable dt, DataGrid dg, int width, bool toName = false)
         {
             if(dt!=null && dg!=null)
-            if(!toName)
-            {
-                foreach (DataGridColumn dgcol in dg.Columns)
+                if(!toName)
                 {
-                    dgcol.Header = dt.Columns[dgcol.Header.ToString()].Caption.ToString();
-                    dgcol.Width = width;
-                }
-            }
-            else
-            {
-                foreach (DataGridColumn dgcol in dg.Columns)
-                {
-                    foreach (DataColumn col in dt.Columns)
+                    foreach (DataGridColumn dgcol in dg.Columns)
                     {
-                        if (dgcol.Header.ToString() == col.Caption.ToString())
-                        {
-                            dgcol.Header = col.ColumnName;
-                            break;
-                        }
+                        dgcol.Header = dt.Columns[dgcol.Header.ToString()].Caption.ToString();
+                        dgcol.Width = width;
                     }
-                    dgcol.Width = width;
                 }
-            }
+                else
+                {
+                    foreach (DataGridColumn dgcol in dg.Columns)
+                    {
+                        foreach (DataColumn col in dt.Columns)
+                        {
+                            if (dgcol.Header.ToString() == col.Caption.ToString())
+                            {
+                                dgcol.Header = col.ColumnName;
+                                break;
+                            }
+                        }
+                        dgcol.Width = width;
+                    }
+                }
         }
     }
 }

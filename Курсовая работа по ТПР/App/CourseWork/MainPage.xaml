@@ -39,7 +39,7 @@
             </Label>
 
             <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource inTextBlockSyle}">J =</TextBlock>
-            <TextBox Name="J_TextBox"  Grid.Column="1" Grid.Row="1" Style="{StaticResource inTextBoxStyle}">3</TextBox>
+            <TextBox Name="J_TextBox"  Grid.Column="1" Grid.Row="1" Style="{StaticResource inTextBoxStyle}">5</TextBox>
 
             <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource inTextBlockSyle}">T =</TextBlock>
             <TextBox Name="T_TextBox" Grid.Column="1" Grid.Row="2" Style="{StaticResource inTextBoxStyle}">60</TextBox>
@@ -54,7 +54,7 @@
             <TextBlock Name ="k1_textBlock" Grid.Column="2" Grid.Row="3" Style="{StaticResource kTextBlockSyle}"></TextBlock>
             <TextBlock Name ="k2_textBlock" Grid.Column="2" Grid.Row="4" Style="{StaticResource kTextBlockSyle}"></TextBlock>
 
-            <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3">Вид заголовков</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" >Вид заголовков</TextBlock>
             <ComboBox Name="NameOrCaption" Grid.Row="7" Grid.ColumnSpan="3" Grid.Column="0" Width="auto" SelectionChanged="NameOrCaption_SelectionChanged">
                 <ComboBoxItem IsSelected="True" Name="name">
                     <TextBlock>Краткое название</TextBlock>

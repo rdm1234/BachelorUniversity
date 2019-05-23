@@ -5,5 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork"
         mc:Ignorable="d"
-        Title="Статистическое моделирование СМО" Height="800" Width="855" Source="MainPage.xaml"  MinWidth="500" MinHeight="523">
+        Title="Статистическое моделирование СМО" Height="800" Width="870" Source="MainPage.xaml"  MinWidth="500" MinHeight="523">
 </NavigationWindow>
