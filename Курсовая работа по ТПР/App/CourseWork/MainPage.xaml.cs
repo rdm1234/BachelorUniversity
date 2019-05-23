@@ -63,6 +63,9 @@ namespace CourseWork
 
             // Генерация и вывод данных таблиц
             SolveButtonClick(null, null);
+            dataGrid_1.ColumnWidth = 50;
+            dataGrid_2.ColumnWidth = 50;
+            dataGrid_3.ColumnWidth = 50;
         }
 
         // Генерация данных для таблиц
