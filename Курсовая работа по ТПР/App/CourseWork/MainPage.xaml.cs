@@ -46,11 +46,9 @@ namespace CourseWork
                 new System.Data.DataColumn("P",typeof(double)){Caption="P - вероятность обслуживания"},
                 new System.Data.DataColumn("Q",typeof(double)){Caption="Q - вероятность отказа", AllowDBNull = true}
             });
-            
-            // Вызов функции, которая генерирует данные
-            GenerateTableData(int.Parse(J_TextBox.Text), int.Parse(T_TextBox.Text), float.Parse(l1_TextBox.Text), float.Parse(l2_TextBox.Text));
-            // Вызов функции, которая выводит данные
-            RefreshTables();
+
+            // Генерация и вывод данных
+            SolveButtonClick(null, null);
 
             // Создание легенды
             List<string> colNames = new List<string>(main_table.Columns.Count);
@@ -90,8 +88,8 @@ namespace CourseWork
             Random R = new Random();
             Random r = new Random();
 
+            // временные переменные (обозначения см. в приложении 1)
             double t, T, cur_r, cur_R, ln_r, ln_R, tau, startSvc, endSvc, tau_sum, P, tau_mid_sum, N_rec_sum, N_svc_sum, P_sum, tau_mid;
-
             int svcCount, refCount, i;
 
             // переменные, использующиеся в результирующей таблице
@@ -170,6 +168,7 @@ namespace CourseWork
             dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false, "j", "i", "R", "-ln(R)", "tau", "startSvc", "endSvc", "svc", "ref").DefaultView;
 
             dataGrid_3.ItemsSource = result_table.DefaultView;
+            NameOrCaption_SelectionChanged(NameOrCaption, null);
         }
 
         // Выполняется при нажатии на кнопку "Решить"
@@ -180,9 +179,66 @@ namespace CourseWork
                 GenerateTableData(int.Parse(J_TextBox.Text), int.Parse(T_TextBox.Text), double.Parse(l1_TextBox.Text), double.Parse(l2_TextBox.Text));
                 RefreshTables();
             }
-            catch (Exception fE)
+            catch (System.FormatException e1)
             {
-                MessageBox.Show(fE.Message, "Ошибка!");
+                MessageBox.Show(e1.Message, "Ошибка!");
+            }
+            catch (ArgumentOutOfRangeException e2)
+            {
+                MessageBox.Show(e2.Message, "Ошибка!");
+            }
+            catch (Exception e3) { }
+        }
+
+        private void NameOrCaption_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(legendListBox!=null)
+                if(((ComboBoxItem)((ComboBox)sender).SelectedItem).Name.ToString() == "caption")
+                {
+                    ChangeDataGridHeaders(main_table, dataGrid_1, 100);
+                    ChangeDataGridHeaders(main_table, dataGrid_2, 100);
+                    ChangeDataGridHeaders(result_table, dataGrid_3, 100);
+                    legendListBox.Visibility = Visibility.Hidden;
+                    legendListBox.Width = 0;
+                    legendListBox.Height = 0;
+                }
+                else
+                {
+                    ChangeDataGridHeaders(main_table, dataGrid_1, 50, true);
+                    ChangeDataGridHeaders(main_table, dataGrid_2, 50, true);
+                    ChangeDataGridHeaders(result_table, dataGrid_3, 50, true);
+
+                    legendListBox.Visibility = Visibility.Visible;
+                    legendListBox.Height = 364;
+                    legendListBox.Width = 312;
+                }
+        }
+
+        private void ChangeDataGridHeaders(DataTable dt, DataGrid dg, int width, bool toName = false)
+        {
+            if(dt!=null && dg!=null)
+            if(!toName)
+            {
+                foreach (DataGridColumn dgcol in dg.Columns)
+                {
+                    dgcol.Header = dt.Columns[dgcol.Header.ToString()].Caption.ToString();
+                    dgcol.Width = width;
+                }
+            }
+            else
+            {
+                foreach (DataGridColumn dgcol in dg.Columns)
+                {
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        if (dgcol.Header.ToString() == col.Caption.ToString())
+                        {
+                            dgcol.Header = col.ColumnName;
+                            break;
+                        }
+                    }
+                    dgcol.Width = width;
+                }
             }
         }
     }
