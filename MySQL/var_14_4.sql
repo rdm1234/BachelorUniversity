@@ -59,12 +59,15 @@ right join Водители as V on R.Номер_водителя = V.Номер
 order by R.Номер_трассы, V.Номер;
 
 select * from not_normalized;
-delete from Результаты;
-delete from Трассы;
-delete from Водители;
+#select * from Водители;
+SET FOREIGN_KEY_CHECKS = 0;
+truncate table Результаты;
+truncate table Трассы;
+truncate table Водители;
+SET FOREIGN_KEY_CHECKS = 1;
 
 # заданеие 4
-DELIMITER // ;
+DELIMITER $$
 
 CREATE PROCEDURE FILL()
 BEGIN
@@ -86,26 +89,47 @@ BEGIN
 		FETCH CURFILL INTO `№ трассы1`, `Месторасположение трассы1`, `Протяженность км1`, `№ водителя1`, `ФИО Водители1`, `Марка автомобиля1`, `Время прохождения трассы, мин1`;
 		IF is_end THEN LEAVE wet;
 		END IF;
-		DELETE FROM Водители WHERE `№ водителя1` = Водители.Номер and `ФИО Водители1`=Водители.ФИО and `Марка автомобиля1`=Водители.Марка_автомобиля;
-		INSERT INTO Водители VALUES (`№ водителя1`, `ФИО Водители1`, `Марка автомобиля1`);
-
-
-
-		#DELETE FROM not_normalized WHERE `№ трассы1` = `№ трассы` and `Месторасположение трассы1` = `Месторасположение трассы` and `Протяженность км` = `Протяженность км1`;
-		#DELETE FROM Трассы WHERE `№ трассы1` = Трассы.Номер and `Месторасположение трассы1` = Трассы.Месторасположение and `Протяженность км1` = Трассы.Протяженность;
-		#INSERT INTO Трассы VALUES (`№ трассы1`, `Месторасположение трассы1`, `Протяженность км1`);
-
-		#DELETE FROM not_normalized WHERE `№ водителя1` = `№ водителя` and `№ трассы1` = `№ трассы` and `Время прохождения трассы, мин1` = `Время прохождения трассы, мин`;
-		#INSERT INTO Результаты VALUES (`№ водителя1`, `№ трассы1`, `Время прохождения трассы, мин1`);
-		#DELETE FROM not_normalized WHERE `№ водителя` = `№ водителя1` and `ФИО Водители1`=`ФИО Водители` and `Марка автомобиля1`=`Марка автомобиля`;
 		
-
+		DELETE FROM Водители WHERE `№ водителя1` = Водители.Номер; #and `ФИО Водители1`=Водители.ФИО and `Марка автомобиля1`=Водители.Марка_автомобиля;
+		INSERT INTO Водители VALUES (`№ водителя1`, `ФИО Водители1`, `Марка автомобиля1`);
 	END LOOP wet;
-END//
+	CLOSE CURFILL;
 
-CALL FILL()//
-select * from not_normalized;
+	set is_end = 1;
 
-SELECT *FROM Трассы//
-SELECT *FROM Водители//
-SELECT *FROM Результаты//
+	/*OPEN CURFILL;
+	DELETE FROM Водители;
+	wet : LOOP
+		FETCH CURFILL INTO `№ трассы1`, `Месторасположение трассы1`, `Протяженность км1`, `№ водителя1`, `ФИО Водители1`, `Марка автомобиля1`, `Время прохождения трассы, мин1`;
+		IF is_end THEN LEAVE wet;
+		END IF;
+
+		DELETE FROM Трассы WHERE `№ трассы1` = Трассы.Номер;
+		INSERT INTO Трассы VALUES (`№ трассы1`, `Месторасположение трассы1`, `Протяженность км1`);
+	END LOOP wet;
+	CLOSE CURFILL;
+
+	set is_end = 1;
+
+	OPEN CURFILL;
+	DELETE FROM Водители;
+	wet : LOOP
+		FETCH CURFILL INTO `№ трассы1`, `Месторасположение трассы1`, `Протяженность км1`, `№ водителя1`, `ФИО Водители1`, `Марка автомобиля1`, `Время прохождения трассы, мин1`;
+		IF is_end THEN LEAVE wet;
+		END IF;
+
+		#DELETE FROM Результаты WHERE `№ водителя1` = Номер_водителя and `№ трассы1` = Номер_трассы and `Время прохождения трассы, мин1` = Время_прохождения_трассы;
+
+		IF `№ трассы1` is not null then
+		INSERT INTO Результаты VALUES (`№ водителя1`, `№ трассы1`, `Время прохождения трассы, мин1`); END IF;
+		
+	END LOOP wet;*/
+END$$
+
+CALL FILL()$$
+select * from not_normalized$$
+
+SELECT *FROM Трассы$$
+SELECT *FROM Водители$$
+SELECT *FROM Результаты$$
+DELIMITER ;
