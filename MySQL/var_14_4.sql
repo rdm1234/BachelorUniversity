@@ -58,7 +58,7 @@ inner join Трассы as T on R.Номер_трассы = T.Номер)
 right join Водители as V on R.Номер_водителя = V.Номер
 order by R.Номер_трассы, V.Номер;
 
-select * from not_normalized;
+#select * from not_normalized;
 #select * from Водители;
 SET FOREIGN_KEY_CHECKS = 0;
 truncate table Результаты;
@@ -90,15 +90,15 @@ BEGIN
 		IF is_end THEN LEAVE wet;
 		END IF;
 		
-		DELETE FROM Водители WHERE `№ водителя1` = Водители.Номер; #and `ФИО Водители1`=Водители.ФИО and `Марка автомобиля1`=Водители.Марка_автомобиля;
+		DELETE FROM Водители WHERE `№ водителя1` = Водители.Номер;
 		INSERT INTO Водители VALUES (`№ водителя1`, `ФИО Водители1`, `Марка автомобиля1`);
 	END LOOP wet;
 	CLOSE CURFILL;
 
-	set is_end = 1;
+	set is_end = 0;
 
-	/*OPEN CURFILL;
-	DELETE FROM Водители;
+	OPEN CURFILL;
+	DELETE FROM Трассы;
 	wet : LOOP
 		FETCH CURFILL INTO `№ трассы1`, `Месторасположение трассы1`, `Протяженность км1`, `№ водителя1`, `ФИО Водители1`, `Марка автомобиля1`, `Время прохождения трассы, мин1`;
 		IF is_end THEN LEAVE wet;
@@ -109,21 +109,20 @@ BEGIN
 	END LOOP wet;
 	CLOSE CURFILL;
 
-	set is_end = 1;
-
+	set is_end = 0;
+	
 	OPEN CURFILL;
-	DELETE FROM Водители;
+	DELETE FROM Результаты;
 	wet : LOOP
 		FETCH CURFILL INTO `№ трассы1`, `Месторасположение трассы1`, `Протяженность км1`, `№ водителя1`, `ФИО Водители1`, `Марка автомобиля1`, `Время прохождения трассы, мин1`;
 		IF is_end THEN LEAVE wet;
 		END IF;
 
 		#DELETE FROM Результаты WHERE `№ водителя1` = Номер_водителя and `№ трассы1` = Номер_трассы and `Время прохождения трассы, мин1` = Время_прохождения_трассы;
-
-		IF `№ трассы1` is not null then
+		IF `№ трассы1` is not null THEN
 		INSERT INTO Результаты VALUES (`№ водителя1`, `№ трассы1`, `Время прохождения трассы, мин1`); END IF;
-		
-	END LOOP wet;*/
+	END LOOP wet;
+	CLOSE CURFILL;
 END$$
 
 CALL FILL()$$
