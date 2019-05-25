@@ -60,11 +60,11 @@ order by R.Номер_трассы, V.Номер;
 
 #select * from not_normalized;
 #select * from Водители;
-SET FOREIGN_KEY_CHECKS = 0;
+/*SET FOREIGN_KEY_CHECKS = 0;
 truncate table Результаты;
 truncate table Трассы;
 truncate table Водители;
-SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1;*/
 
 # заданеие 4
 DELIMITER $$
