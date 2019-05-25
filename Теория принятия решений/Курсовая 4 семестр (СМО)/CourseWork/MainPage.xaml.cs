@@ -93,7 +93,7 @@ namespace CourseWork
             Random r = new Random();
             
             // переменные (обозначения см. в приложении 1)
-            double t, T, cur_r, cur_R, ln_r, ln_R, tau, startSvc, endSvc, tau_sum, P, tau_mid_sum, N_rec_sum, N_svc_sum, P_sum, tau_mid, P_mid;
+            double t, T, cur_r, cur_R, ln_r, ln_R, tau, endSvc, tau_sum, P, tau_mid_sum, N_rec_sum, N_svc_sum, P_sum, tau_mid, P_mid;
             int svcCount, refCount, i;
 
             // переменные, использующиеся в результирующей таблице
@@ -104,13 +104,13 @@ namespace CourseWork
             {
                 cur_R = R.Next(1, 100)/100.0;
                 ln_R = -Math.Log(cur_R);
-                tau_sum = cur_r = ln_r = startSvc = T = t = 0;
+                tau_sum = cur_r = ln_r = T = t = 0;
                 endSvc = tau = k2 * ln_R;
                 svcCount = 1;
                 refCount = 0;
 
                 // Первая строка в каждом испытании
-                main_table.Rows.Add(new object[] { j, 1.ToString(), null, null, null, T.ToString(doubleFormat), cur_R.ToString(doubleFormat), ln_R.ToString(doubleFormat), tau.ToString(doubleFormat), startSvc.ToString(doubleFormat), endSvc.ToString(doubleFormat), svcCount, null});
+                main_table.Rows.Add(new object[] { j, 1.ToString(), null, null, null, T.ToString(doubleFormat), cur_R.ToString(doubleFormat), ln_R.ToString(doubleFormat), tau.ToString(doubleFormat), 0, endSvc.ToString(doubleFormat), 1, null});
 
                 // Все остальные строки в каждом испытании
                 cur_r = r.Next(1, 100) / 100.0;
@@ -172,7 +172,7 @@ namespace CourseWork
                  select row).AsDataView();
 
             // выборка отдельных столбцов из главной таблицы
-            dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false, "j", "i", "R", "-ln(R)", "tau", "startSvc", "endSvc", "svc", "ref").DefaultView;
+            dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false,   ).DefaultView;
 
             // таблица результатов выводится полностью
             dataGrid_3.ItemsSource = result_table.DefaultView;
