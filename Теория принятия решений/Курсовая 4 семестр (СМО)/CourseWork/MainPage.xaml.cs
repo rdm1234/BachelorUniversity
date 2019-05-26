@@ -207,26 +207,13 @@ namespace CourseWork
         // Вызывается при выборе другого значения чекбокса NameOrCaption
         private void NOC_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(((ComboBoxItem)((ComboBox)sender).SelectedItem).Name.ToString() == "caption")
+            if(((ComboBoxItem)((ComboBox)sender).SelectedItem).Name.ToString() == "name")
             {
                 // Меняет ширину и заголовки столбцов
-                ChangeDataGridHeaders(main_table, dataGrid_1, 100);
-                ChangeDataGridHeaders(main_table, dataGrid_2, 100);
-                ChangeDataGridHeaders(result_table, dataGrid_3, 100);
-                // Делает легенду невидимой
-                if (legendListBox != null)
-                {
-                    legendListBox.Visibility = Visibility.Hidden;
-                    legendListBox.Width = 0;
-                    legendListBox.Height = 0; 
-                }
-            }
-            else
-            {
-                // Меняет ширину и заголовки столбцов
-                ChangeDataGridHeaders(main_table, dataGrid_1, 50, true);
-                ChangeDataGridHeaders(main_table, dataGrid_2, 50, true);
-                ChangeDataGridHeaders(result_table, dataGrid_3, 50, true);
+                ChangeHeaderTextToName(main_table, dataGrid_1, 50);
+                ChangeHeaderTextToName(main_table, dataGrid_2, 50);
+                ChangeHeaderTextToName(result_table, dataGrid_3, 50);
+
                 // Делает легенду видимой
                 if (legendListBox != null)
                 {
@@ -235,38 +222,51 @@ namespace CourseWork
                     legendListBox.Width = 312;
                 }
             }
+            else
+            {
+                // Меняет ширину и заголовки столбцов
+                ChangeHeaderTextToCaption(main_table, dataGrid_1, 100);
+                ChangeHeaderTextToCaption(main_table, dataGrid_2, 100);
+                ChangeHeaderTextToCaption(result_table, dataGrid_3, 100);
+                
+                // Делает легенду невидимой
+                if (legendListBox != null)
+                {
+                    legendListBox.Visibility = Visibility.Hidden;
+                    legendListBox.Width = 0;
+                    legendListBox.Height = 0;
+                }
+            }
         }
 
         // Меняет заголовки в таблице (и ширину столбцов)
-        private void ChangeDataGridHeaders(DataTable dt, DataGrid dg, int width, bool toName = false)
+        private void ChangeHeaderTextToName(DataTable dt, DataGrid dg, int width)
         {
             // Проверка, что выводимая таблица и таблица с данными существуют
-            if(dt!=null && dg!=null)
-            {
-                if(!toName)
+            if (dt != null && dg != null)
+                foreach (DataGridColumn dgcol in dg.Columns)
                 {
-                    foreach (DataGridColumn dgcol in dg.Columns)
+                    foreach (DataColumn col in dt.Columns)
                     {
-                        dgcol.Header = dt.Columns[dgcol.Header.ToString()].Caption.ToString();
-                        dgcol.Width = width;
-                    }
-                }
-                else
-                {
-                    foreach (DataGridColumn dgcol in dg.Columns)
-                    {
-                        foreach (DataColumn col in dt.Columns)
+                        if (dgcol.Header.ToString() == col.Caption.ToString())
                         {
-                            if (dgcol.Header.ToString() == col.Caption.ToString())
-                            {
-                                dgcol.Header = col.ColumnName;
-                                break;
-                            }
+                            dgcol.Header = col.ColumnName;
+                            break;
                         }
-                        dgcol.Width = width;
                     }
+                    dgcol.Width = width;
                 }
-            }
+        }
+
+        private void ChangeHeaderTextToCaption(DataTable dt, DataGrid dg, int width)
+        {
+            // Проверка, что выводимая таблица и таблица с данными существуют
+            if (dt != null && dg != null)
+                foreach (DataGridColumn dgcol in dg.Columns)
+                {
+                    dgcol.Header = dt.Columns[dgcol.Header.ToString()].Caption.ToString();
+                    dgcol.Width = width;
+                }
         }
     }
 }
