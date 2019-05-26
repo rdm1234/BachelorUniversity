@@ -172,7 +172,7 @@ namespace CourseWork
                  select row).AsDataView();
 
             // выборка отдельных столбцов из главной таблицы
-            dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false,   ).DefaultView;
+            dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false, "j", "i", "R", "-ln(R)", "tau", "startSvc", "endSvc", "svc", "ref").DefaultView;
 
             // таблица результатов выводится полностью
             dataGrid_3.ItemsSource = result_table.DefaultView;
