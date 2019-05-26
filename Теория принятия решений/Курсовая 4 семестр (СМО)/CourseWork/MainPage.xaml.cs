@@ -172,7 +172,7 @@ namespace CourseWork
                  select row).AsDataView();
 
             // выборка отдельных столбцов из главной таблицы
-            dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false, "j", "i", "R", "-ln(R)", "tau", "startSvc", "endSvc", "svc", "ref").DefaultView;
+            dataGrid_2.ItemsSource = main_table.AsDataView().ToTable("Table2", false, "j", "i", "R", "-ln(R)", "tau", "T", "startSvc", "endSvc", "svc", "ref").DefaultView;
 
             // таблица результатов выводится полностью
             dataGrid_3.ItemsSource = result_table.DefaultView;
@@ -201,7 +201,9 @@ namespace CourseWork
                 MessageBox.Show(e2.Message, "Ошибка!");
             }
             // Любое другое исключение
-            catch (Exception e3) { }
+            catch (Exception e3) {
+                MessageBox.Show(e3.Message, "Ошибка!");
+            }
         }
 
         // Вызывается при выборе другого значения чекбокса NameOrCaption
@@ -264,7 +266,8 @@ namespace CourseWork
             if (dt != null && dg != null)
                 foreach (DataGridColumn dgcol in dg.Columns)
                 {
-                    dgcol.Header = dt.Columns[dgcol.Header.ToString()].Caption.ToString();
+                    if(dt.Columns[dgcol.Header.ToString()]!=null)
+                        dgcol.Header = dt.Columns[dgcol.Header.ToString()].Caption.ToString();
                     dgcol.Width = width;
                 }
         }
