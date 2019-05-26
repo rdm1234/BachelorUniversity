@@ -178,7 +178,7 @@ namespace CourseWork
             dataGrid_3.ItemsSource = result_table.DefaultView;
 
             // если выбран пункт "Полное название", заменяет заголовки столбов
-            NameOrCaption_SelectionChanged(NameOrCaption, null);
+            NOC_SelectionChanged(NameOrCaption, null);
         }
 
         // Выполняется при нажатии на кнопку "Решить"
@@ -205,7 +205,7 @@ namespace CourseWork
         }
 
         // Вызывается при выборе другого значения чекбокса NameOrCaption
-        private void NameOrCaption_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void NOC_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(((ComboBoxItem)((ComboBox)sender).SelectedItem).Name.ToString() == "caption")
             {
