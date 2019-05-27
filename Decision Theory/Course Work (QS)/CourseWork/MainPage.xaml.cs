@@ -22,29 +22,29 @@ namespace CourseWork
             // Создание главной таблицы
             main_table.Columns.AddRange(new DataColumn[]
             {
-                new System.Data.DataColumn("j",typeof(int)){ Caption = "j - Номер испытания"},
-                new System.Data.DataColumn("i",typeof(string)) { Caption = "i - Номер заявки" },
-                new System.Data.DataColumn("r",typeof(double)){ Caption = "r - Случайное число", AllowDBNull = true },
-                new System.Data.DataColumn("-ln(r)",typeof(double)){ Caption = "-ln(r)", AllowDBNull = true },
-                new System.Data.DataColumn("t",typeof(double)){ Caption = "t(i) = k1(-ln(r)) - Время между заявками", AllowDBNull = true },
-                new System.Data.DataColumn("T",typeof(double)){ Caption = "T(i) = T(i-1) + t(i)- Момент поступления заявки", AllowDBNull = true },
-                new System.Data.DataColumn("R",typeof(double)){ Caption = "R - Случайное число", AllowDBNull = true },
-                new System.Data.DataColumn("-ln(R)",typeof(double)){ Caption = "-ln(R)", AllowDBNull = true },
-                new System.Data.DataColumn("tau",typeof(double)){ Caption = "tau(i) = k1(-ln(r)) - Длительность обслуживания заявки", AllowDBNull = true },
-                new System.Data.DataColumn("startSvc",typeof(double)){ Caption = "startSvc - Момент начала обслуживания", AllowDBNull = true },
-                new System.Data.DataColumn("endSvc",typeof(double)){ Caption = "endSvc - Момент окончания обслуживания", AllowDBNull = true },
-                new System.Data.DataColumn("svc",typeof(int)){ Caption = "svc - Заявка обслужена", AllowDBNull = true },
-                new System.Data.DataColumn("ref",typeof(int)){ Caption = "ref - Отказ в обслуживании заявки", AllowDBNull = true }
+                new DataColumn("j",typeof(int)){ Caption = "j - Номер испытания"},
+                new DataColumn("i",typeof(string)) { Caption = "i - Номер заявки" },
+                new DataColumn("r",typeof(double)){ Caption = "r - Случайное число", AllowDBNull = true },
+                new DataColumn("-ln(r)",typeof(double)){ Caption = "-ln(r)", AllowDBNull = true },
+                new DataColumn("t",typeof(double)){ Caption = "t(i) = k1(-ln(r)) - Время между заявками", AllowDBNull = true },
+                new DataColumn("T",typeof(double)){ Caption = "T(i) = T(i-1) + t(i)- Момент поступления заявки", AllowDBNull = true },
+                new DataColumn("R",typeof(double)){ Caption = "R - Случайное число", AllowDBNull = true },
+                new DataColumn("-ln(R)",typeof(double)){ Caption = "-ln(R)", AllowDBNull = true },
+                new DataColumn("tau",typeof(double)){ Caption = "tau(i) = k1(-ln(r)) - Длительность обслуживания заявки", AllowDBNull = true },
+                new DataColumn("startSvc",typeof(double)){ Caption = "startSvc - Момент начала обслуживания", AllowDBNull = true },
+                new DataColumn("endSvc",typeof(double)){ Caption = "endSvc - Момент окончания обслуживания", AllowDBNull = true },
+                new DataColumn("svc",typeof(int)){ Caption = "svc - Заявка обслужена", AllowDBNull = true },
+                new DataColumn("ref",typeof(int)){ Caption = "ref - Отказ в обслуживании заявки", AllowDBNull = true }
             });
             // Создание таблицы с результатами
-            result_table.Columns.AddRange(new System.Data.DataColumn[] {
-                new System.Data.DataColumn("j",typeof(string)){Caption="j - Номер испытания"},
-                new System.Data.DataColumn("N_rec",typeof(double)){Caption="N_rec - Поступило заявок"},
-                new System.Data.DataColumn("N_svc",typeof(double)){Caption="N_svc - Обслужено заявок"},
-                new System.Data.DataColumn("tau_sum",typeof(double)){Caption="tau_sum - Длительность обслуживания", AllowDBNull = true},
-                new System.Data.DataColumn("tau_mid",typeof(double)){Caption="tau_mid - Среднее время обслуживания"},
-                new System.Data.DataColumn("P",typeof(double)){Caption="P - вероятность обслуживания"},
-                new System.Data.DataColumn("Q",typeof(double)){Caption="Q - вероятность отказа", AllowDBNull = true}
+            result_table.Columns.AddRange(new DataColumn[] {
+                new DataColumn("j",typeof(string)){Caption="j - Номер испытания"},
+                new DataColumn("N_rec",typeof(double)){Caption="N_rec - Поступило заявок"},
+                new DataColumn("N_svc",typeof(double)){Caption="N_svc - Обслужено заявок"},
+                new DataColumn("tau_sum",typeof(double)){Caption="tau_sum - Длительность обслуживания", AllowDBNull = true},
+                new DataColumn("tau_mid",typeof(double)){Caption="tau_mid - Среднее время обслуживания"},
+                new DataColumn("P",typeof(double)){Caption="P - вероятность обслуживания"},
+                new DataColumn("Q",typeof(double)){Caption="Q - вероятность отказа", AllowDBNull = true}
             });
 
             // Создание легенды
