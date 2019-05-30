@@ -2,3 +2,4 @@
 CourseWork/bin/Debug/
 CourseWork/obj/
 CourseWork/info/
+!CourseWork/bin/Release/*
