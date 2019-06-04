@@ -1,5 +1,5 @@
 import random
-#card_game
+# Вариант 1
 def task13(cards,count):
 	print('Карты -',cards)
 	count1=0
@@ -39,7 +39,7 @@ def task13(cards,count):
 			print('Полученная колода -',cards)
 			count1=count1+1
 
-
+# Вариант 2
 def task13_2(cards):
 	shake=random.randint(2,len(cards)-2)
 	part1=cards[:shake]
