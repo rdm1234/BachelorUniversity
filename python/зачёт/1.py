@@ -1,6 +1,6 @@
 import random
 
-#1 Шейкер-сортировка с встроенным листом
+# Вариант 1 - С встроенным листом
 def shaker_sort_1(lst):
 	if lst == []:
 		return []
@@ -30,7 +30,7 @@ def test_1_1(n):
     print('result', shaker_sort_1(lst))
     print('after',lst)
 
-#################С реализованным списком##################
+# Вариант 2 - С реализованным ниже списком
 class Node:
     __value=None
     __next=None
@@ -123,7 +123,7 @@ def genList(n):
 		lst.add_last(random.randint(-n, n))
 	return lst
 
-#1 Шейкер-сортировка с созданным выше листом
+# Сортировка
 def shaker_sort_2(lst):
 	#compare = 0; perm = 0; 
 	left = 0; right = lst.get_count() - 1
@@ -150,6 +150,7 @@ def shaker_sort_2(lst):
 		left+=1
 	#return [compare, perm]
 	
+# Тест сортировки
 def test_1_2(n):
 	lst = genList(n)
 	print('before')
