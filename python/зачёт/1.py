@@ -27,7 +27,7 @@ def gen(n):
 def test_1_1(n):
     lst = gen(n)
     print('before',lst)
-    print('result', shaker_sort_1(lst))
+    #print('result', shaker_sort_1(lst))
     print('after',lst)
 
 # Вариант 2 - С реализованным ниже списком
