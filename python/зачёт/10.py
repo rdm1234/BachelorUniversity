@@ -92,3 +92,25 @@ class deque:
             return b.get_value()
         else:
             return None
+
+def test_10():
+    a=deque(5)
+    print("Созданный дек с первым значением 5: ")
+    a.print_deque()
+    a.add_first(3)
+    print("После добавления 3 в начало дека: ")
+    a.print_deque()
+    a.add_last(2)
+    a.add_last(8)
+    a.add_last(10)
+    print("После добавления 2, 8, 10 в конец дека: ")
+    a.print_deque()
+    print("Извлечение первого элемента:", a.pop_first())
+    print("После извлечения первого элемента: ")
+    a.print_deque()
+    print("Извлечение последнего элемента:", a.pop_last())
+    print("После извлечения последнего элемента: ")
+    a.print_deque()
+
+
+test_10()

@@ -26,9 +26,9 @@ def gen(n):
 
 def test_1_1(n):
     lst = gen(n)
-    print('before',lst)
-    #print('result', shaker_sort_1(lst))
-    print('after',lst)
+    print('До сортировки:',lst)
+    shaker_sort_1(lst)
+    print('После сортировки:',lst)
 
 # Вариант 2 - С реализованным ниже списком
 class Node:
@@ -153,8 +153,8 @@ def shaker_sort_2(lst):
 # Тест сортировки
 def test_1_2(n):
 	lst = genList(n)
-	print('before')
+	print('До сортировки:')
 	lst.print_list()
-	#print('result', shaker_sort_2(lst))
-	print('after')
+	shaker_sort_2(lst)
+	print('После сортировки:')
 	lst.print_list()

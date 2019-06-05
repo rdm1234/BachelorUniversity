@@ -12,8 +12,7 @@ def f(n):
         count+=1
     return count
 
-# n - кол-во вершин m - кол-во испытаний
-# avrg
+# n - кол-во вершин a - кол-во испытаний
 def task_16(n,a):
     l=[]
     for i in range(a):

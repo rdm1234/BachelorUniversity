@@ -1,12 +1,11 @@
 
 def find_disorder(lst):
 	counter = [0]*len(lst)
-	#print('counter before: ', counter)
 	for i in range(len(lst)-1):
 		for j in range(i, len(lst)):
 			if lst[i] > lst[j]:
 				counter[i]+=1
-	print('counter after: ', counter)
+	print('Счётчик: ', counter)
 
 	disorder = 0; min_dis_elem = 0; max_dis_elem = 0; minElem = counter[0]; maxElem = counter[0]
 	maxValue = lst[0]; minValue = lst[0]
@@ -29,14 +28,13 @@ def find_disorder(lst):
 def find_disorder_v2(lst):
 	counter = [0]*len(lst)
 	disorder = 0
-	#print('counter before: ', counter)
 	for i in range(len(lst)-1):
 		for j in range(i, len(lst)):
 			if lst[i] > lst[j]:
 				counter[i]+=1
 				counter[j]+=1
 				disorder+=1
-	print('counter after: ', counter)
+	print('Счётчик: ', counter)
 
 	min_dis_elem = 0; max_dis_elem = 0; minElem = counter[0]; maxElem = counter[0]
 
@@ -56,7 +54,9 @@ def gen(n):
 
 def test_disorder(n):
 	a = gen(n)
-	print('list: ', a)
+	print('Первая версия :\n')
+	print('Список: ', a)
 	print(find_disorder(a))
-	print('list: ', a)
+	print('\nВторая версия :\n')
+	print('Список: ', a)
 	print(find_disorder_v2(a))

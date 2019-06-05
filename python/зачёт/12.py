@@ -131,3 +131,13 @@ class tree():
             return [current_node.get_data(),[],self.show_tree(current_node.get_right())]
         else:
             return [current_node.get_data(),self.show_tree(current_node.get_left()),self.show_tree(current_node.get_right())]
+def test_12():
+	a = hashtable(10)
+	a.addvalue(4)
+	a.addvalue(44)
+	a.addvalue(444)
+	print('Список, 5-м элементом которого является дерево (возникает коллизия): \n', a.get_table())
+	print('5-й элемент списка - бинарное дерево поиска: \n', a.get_table()[4].show_tree(a.get_table()[4].get_top()))
+
+test_12()
+

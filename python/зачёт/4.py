@@ -6,6 +6,9 @@ def test_4():
 def task_4(emps):
     h = heap()
     h.add_list(emps)
+    print("До сортировки")
+    for i in emps:
+        i.print_emp()
     h.sort()
     # отсортированные сотрудники (по году)
     emps = h.look()[3]
@@ -32,7 +35,8 @@ def task_4(emps):
         temp_emps = emps[(match[i][0]-1) : match[i][1]]
         Shell(temp_emps)
         emps[(match[i][0]-1) : match[i][1]] = temp_emps
-
+        
+    print("После сортировки")
     # окончательно отсортированные
     for i in emps:
         i.print_emp()
