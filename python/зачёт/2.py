@@ -22,7 +22,7 @@ def find_disorder(lst):
 			maxValue = lst[i]
 	# disorder - беспорядок
 	# max_dis_elem, maxValue, maxElem - id элемента; сам элемент; беспорядок, который вносит
-	return [disorder,  (max_dis_elem, maxValue, maxElem), (min_dis_elem, maxValue, minElem)]
+	return [disorder,  (max_dis_elem, maxValue, maxElem), (min_dis_elem, minValue, minElem)]
 
 # оба элемента пары вносят беспорядок
 def find_disorder_v2(lst):
