@@ -1,5 +1,5 @@
 # emps имеет след. структуру:
-# [[id, year, month], ....]
+# [emp(id, year, month) , ....]
 def test_4():
     task_4([emp(1,1995,1), emp(2,1990,1), emp(3,1999,8), emp(4, 1999, 5)])
 
