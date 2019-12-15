@@ -1,7 +1,11 @@
+# Если база данных уже существует, то она удалится
 drop database if exists task_2;
+# Создание базы данных
 create database task_2;
+# Использование базы данных
 use task_2;
 
+# Удаление таблиц, если они существуют
 drop table if exists Продукты;
 drop table if exists Рецепты_блюд;
 drop table if exists Ингредиенты;
@@ -24,8 +28,8 @@ create table Ингредиенты(
 	НоменклатурныйНомер int,
 	Количество float,
 	primary key(НомерРецепта, НоменклатурныйНомер),
-	foreign key (НомерРецепта) references Рецепты_блюд(НомерРецепта) on update cascade on delete cascade,
-	foreign key (НоменклатурныйНомер) references Продукты(НомерПозиции) on update cascade on delete cascade
+	foreign key (НомерРецепта) references Рецепты_блюд(НомерРецепта) on update cascade on delete no action,
+	foreign key (НоменклатурныйНомер) references Продукты(НомерПозиции) on update cascade on delete no action
 );
 
 create table Ингредиенты1(
@@ -33,8 +37,8 @@ create table Ингредиенты1(
 	НоменклатурныйНомер int,
 	Количество float,
 	primary key(НомерРецепта, НоменклатурныйНомер),
-	foreign key (НомерРецепта) references Рецепты_блюд(НомерРецепта) on update cascade on delete cascade,
-	foreign key (НоменклатурныйНомер) references Продукты(НомерПозиции) on update cascade on delete cascade
+	foreign key (НомерРецепта) references Рецепты_блюд(НомерРецепта) on update cascade on delete no action,
+	foreign key (НоменклатурныйНомер) references Продукты(НомерПозиции) on update cascade on delete no action
 );
 
 # 3 INSERT INTO – заполнить полученные таблицы данными.
@@ -69,7 +73,7 @@ values
 	(101, 107, 0.150),
 	(101, 108, 0.300);
 
-# 4 INSERT INTO – заполнить таблицу «Ингредиенты» данными из таблицы «Ингре-диенты1»
+# 4 INSERT INTO – заполнить таблицу «Ингредиенты» данными из таблицы «Ингредиенты1»
 insert into Ингредиенты select * from Ингредиенты1;
 
 # 5 UPDATE – изменить в поле «№ рецепта» с 101 на 102 во всех таблицах
@@ -78,7 +82,11 @@ set НомерРецепта = 102
 where НомерРецепта = 101;
 
 # 6 DELETE – удалить данных по продукту № позиции 108 из всех таблиц.
+begin;
+delete from Ингредиенты where НоменклатурныйНомер = 108;
+delete from Ингредиенты1 where НоменклатурныйНомер = 108;
 delete from Продукты where НомерПозиции = 108;
+commit;
 
 # 7 DELETE – удалить таблицу «Ингредиенты1».
 drop table Ингредиенты1;
@@ -124,22 +132,14 @@ group by A.НомерРецепта;
 select A.НомерПозиции, Наименование_продукта, Единицы_измерения, count(НомерРецепта) as `Количество рецептов`
 from Продукты A
 inner join Ингредиенты B on A.НомерПозиции = B.НоменклатурныйНомер
-group by A.НомерПозиции;
+group by 1,2,3;
 
 # 14. SELECT –  вывести на экран запись, содержащую следующие поля: № рецепта, Наименование блюда, Количество ингредиентов для рецептов, содержащих максимальное количество ингредиентов
-select НомерРецепта, Название_блюда, max(`Количество ингредиентов`)
-from(
-	select A.НомерРецепта, Название_блюда, count(НоменклатурныйНомер) as `Количество ингредиентов`
-	from Рецепты_блюд A
-	inner join Ингредиенты B on A.НомерРецепта = B.НомерРецепта
-	group by A.НомерРецепта
-) as temp;
-# или
 select НомерРецепта, Название_блюда, `Количество ингредиентов`
 from(
 	select A.НомерРецепта, Название_блюда, count(НоменклатурныйНомер) as `Количество ингредиентов`
 	from Рецепты_блюд A
 	inner join Ингредиенты B on A.НомерРецепта = B.НомерРецепта
 	group by A.НомерРецепта
-) as temp
+) temp
 having max(`Количество ингредиентов`);
