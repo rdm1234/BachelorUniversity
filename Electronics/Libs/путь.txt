@@ -1,0 +1,1 @@
+C:\Program Files\scilab-6.0.2\modules\scicos_blocks\macros\Electrical
