@@ -1,7 +1,6 @@
 #include "word.h"
 
 namespace mystr {
-
 Word::Word() : String()
 {
 }
@@ -79,6 +78,4 @@ bool Word::operator==(Word &other)
     }
     return true;
 }
-
-
 }

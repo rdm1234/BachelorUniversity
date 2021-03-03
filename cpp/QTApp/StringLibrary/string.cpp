@@ -87,16 +87,49 @@ Vector<int> String::find(const char * str)
     Vector <int> result;
     int iThis = 0;
     int iOther = 0;
+    int startFindId = 0;
+
+    int find_string_len = strlen(str);
+
     while (iThis < this->size) {
-        if (str[iOther] == this->str[iThis])
-            iOther++;
-        else
-            iOther = 0;
-        if (iOther == strlen(str)) {
-            result.push_back(iThis - strlen(str) + 1);
-            iOther = 0;
+        int regular_find_result = find_regular(this->str, iThis, str, iOther);
+
+        if (regular_find_result == -2) {
+            if (str[iOther] == this->str[iThis]){
+                iThis++;
+                iOther++;
+            }
+            else {
+                iOther = 0;
+                iThis++;
+                startFindId = iThis;
+            }
         }
-        iThis++;
+        else {
+            if (regular_find_result >= 0) {
+                if (str[iOther] == '{'){
+                    do {
+                        iOther++;
+                    }
+                    while (str[iOther] != '}');
+                    iOther++;
+                }
+
+                iOther++;
+                iThis = regular_find_result + 1;
+            }
+            else {
+                iOther = 0;
+                iThis++;
+                startFindId = iThis;
+            }
+        }
+
+        if (iOther >= find_string_len) {
+            result.push_back(startFindId);
+            iOther = 0;
+            startFindId = iThis;
+        }
     }
     return result;
 }
@@ -237,8 +270,5 @@ void String::change_size(int size)
     }
     this->size = size;
 }
-
-
-
 
 }

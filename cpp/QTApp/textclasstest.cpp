@@ -22,7 +22,6 @@ TextClassTest::~TextClassTest()
 
 void TextClassTest::on_pushButton_find_clicked()
 {
-    //mystr::Text tempText(ui->comboBoxText->count());
     mystr::Text tempText;
     mystr::String tempStr;
     for (auto i = 0; i < ui->comboBoxText->count(); ++i) {
@@ -30,8 +29,11 @@ void TextClassTest::on_pushButton_find_clicked()
         tempText.text.push_back(tempStr);
     }
     auto result = tempText.find(ui->lineEdit_find->text().toStdString().c_str());
+    ui->textBrowser_found->clear();
     for (int i = 0; i < result.getSize(); ++i) {
-        ui->textBrowser_found->append(QString(QString::number(result[i][0]) + QString::number(result[i][1])));
+        for (int j = 0; j < result[i].getSize(); j++){
+            ui->textBrowser_found->append(QString(QString::number(i) + QString(": ") + QString::number(result[i][j])));
+        }
     }
     int g = 0;
     for (int i = 0; i < result.getSize(); i++){

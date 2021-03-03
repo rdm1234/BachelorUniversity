@@ -12,13 +12,11 @@ typedef Pair<int[2], bool> pairI2B;
 typedef Pair<int, int> pairII;
 
 namespace mystr {
-
 class String
 {
 public:
     String();
     String(const char *str);
-    //String(const int size);
     String(const String &other);
 
     ~String();
@@ -52,4 +50,5 @@ protected:
     void change_size(int size);
 };
 }
+
 #endif // STRING_H

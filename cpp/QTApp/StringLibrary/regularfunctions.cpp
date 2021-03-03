@@ -15,7 +15,7 @@ int mystr::find_regular(const char * str, int str_index, const char * find, int 
     case '*':
         return star(str, str_index, find, find_index);
     case '{':
-        repeat(str, str_index, find, find_index);
+        return repeat(str, str_index - 1, find, find_index);
     default:
         return -2;
     }
@@ -44,12 +44,13 @@ int mystr::star(const char * str, int str_index, const char * find, int find_ind
 
     while (str_index < strLength){
         if (find[find_index + 1] == str[str_index]) {
-            return str_index - 1;
+            return str_index;
         }
 
         ++str_index;
     }
-    return -1;
+
+    return str_index;
 }
 
 int mystr::repeat(const char * str, int str_index, const char * find, int find_index)
@@ -57,6 +58,7 @@ int mystr::repeat(const char * str, int str_index, const char * find, int find_i
     int findLength = strlen(find);
     int strLength = strlen(str);
 
+    // Определение типа шаблона повторов
     int secondBracket;
     bool correctly = false;
     int commaPos = -1;
@@ -74,7 +76,7 @@ int mystr::repeat(const char * str, int str_index, const char * find, int find_i
         return -1;
     }
 
-    /* type:
+    /* Типы шаблона повторов:
     *	0: {n,m}
     *	1: {n,}
     *	2: {,m}
@@ -94,6 +96,7 @@ int mystr::repeat(const char * str, int str_index, const char * find, int find_i
         type = 0;
     }
 
+    // Получение значений m и n в зависимости от типа шаблона
     int n = 0;
     int m = 0;
     bool wasComma = false;
@@ -102,20 +105,27 @@ int mystr::repeat(const char * str, int str_index, const char * find, int find_i
     for (int i = find_index + 1, j = 0; i < secondBracket; i++, j++) {
         tempChar[j] = find[i];
     }
+
+    int lastTempCharId = tempCharSize - 1;
+
+    int pCount = 0;
     switch (type)
     {
     case 0:
-        for (int i = tempCharSize - 1; i > 0; --i)
+        for (int i = lastTempCharId; i >= 0; --i)
         {
             if (tempChar[i] == ',') {
-                wasComma = 1;
+                wasComma = true;
+                pCount = 0;
             }
             else {
                 if (!wasComma) {
-                    m += pow(10, i)*(int)(tempChar[i] - '0');
+                    m += pow(10, pCount)*(int)(tempChar[i] - '0');
+                    pCount++;
                 }
                 else {
-                    n += pow(10, i)*(int)(tempChar[i] - '0');
+                    n += pow(10, pCount)*(int)(tempChar[i] - '0');
+                    pCount++;
                 }
             }
         }
@@ -123,41 +133,45 @@ int mystr::repeat(const char * str, int str_index, const char * find, int find_i
     case 1:
         for (int i = tempCharSize-2; i >= 0; --i)
         {
-            n += pow(10, i)*(int)(tempChar[i] - '0');
+            n += pow(10, pCount)*(int)(tempChar[i] - '0');
+            pCount++;
         }
         m = INT_MAX;
         break;
     case 2:
         for (int i = tempCharSize-1; i > 0; --i)
         {
-            m += pow(10, i)*(int)(tempChar[i] - '0');
+            m += pow(10, pCount)*(int)(tempChar[i] - '0');
+            pCount++;
         }
         n = 0;
         break;
     case 3:
         for (int i = tempCharSize - 1; i >= 0; --i)
         {
-            n += pow(10, i)*(int)(tempChar[i] - '0');
+            n += pow(10, pCount)*(int)(tempChar[i] - '0');
+            pCount++;
         }
         m = n;
         break;
     }
     delete[]tempChar;
 
-    int repeats = 0;
+    // Подсчёт максимально возможного количества повторов символа
+    int repeats = 1;
     const char letter = find[find_index - 1];
-    int i = str_index + 1;
-    int j = 0;
-    while (i < strLength && str[i] != letter)
+    int i = str_index;
+    while (i < strLength && str[i] == letter && repeats < m)
     {
         ++i;
-        ++j;
+        ++repeats;
     }
 
-
-    if (j >= n && j <= m) {
+    // Если повторов было достаточно
+    if (repeats >= n) {
         return i;
     }
+    // Повторов было слишком мало, входная строка не подходит под шаблон
     else {
         return -1;
     }

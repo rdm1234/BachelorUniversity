@@ -14,15 +14,6 @@ WordClassTest::~WordClassTest()
     delete ui;
 }
 
-/*void WordClassTest::on_textEdit_textChanged()
-{
-    const char * temp = ui->textEdit->toPlainText().toStdString().c_str();
-    mystr::Word word;
-    ui->textEdit->clear();
-    ui->textEdit->setText(QString(word.getCPtr()));
-}*/
-
-
 void WordClassTest::on_pushButton_find_clicked()
 {
     ui->textBrowser_found->clear();

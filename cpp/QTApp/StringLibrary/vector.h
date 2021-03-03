@@ -284,4 +284,5 @@ void Vector<T>::shrink_to_fit()
     }
 }
 }
+
 #endif // VECTOR_H

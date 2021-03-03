@@ -1,6 +1,5 @@
 #include "text.h"
 
-
 mystr::Text::Text()
 {
 }
@@ -47,7 +46,7 @@ bool mystr::Text::operator<(Text & other)
 
 mystr::Vector<mystr::Vector<int>> mystr::Text::find(const char * str)
 {
-    mystr::Vector<mystr::Vector<int>> result;
+    mystr::Vector<mystr::Vector<int>> result = mystr::Vector<mystr::Vector<int>>(text.getSize());
     for (int i = 0; i < text.getSize(); i++) {
         result[i] = text[i].find(str);
     }
